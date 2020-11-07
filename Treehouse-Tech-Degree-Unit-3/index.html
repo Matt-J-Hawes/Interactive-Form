@@ -21,10 +21,10 @@
         
         <label for="name">Name:</label>
         <input type="text" id="name" name="user-name">
-        
+        <div id="nameAlert"></div>
         <label for="mail">Email:</label>
         <input type="email" id="mail" name="user-email">
-        
+        <div id="emailAlert"></div>
         <label for="title">Job Role</label>
         <select id="title" name="user-title">
           <option value="full-stack js developer">Full Stack JavaScript Developer</option>
@@ -128,7 +128,7 @@
             <input id="zip" name="user-zip" type="text"> 
           </div>
 
-          <div class="col-3 col">
+          <div id="cvvDiv" class="col-3 col">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user-cvv" type="text"> 
           </div>
@@ -168,7 +168,7 @@
 
       </fieldset>        
         <div id="payment-message"></div>
-      <button type="submit">Register</button>
+      <button id="submit-button" type="submit">Register</button>
       
     </form>
 
