@@ -186,7 +186,7 @@ paymentSelection.addEventListener("change", function(){
 	})
 
 
-/*******1234123412341234****** SUBMIT FORM SECTION **************/
+/*************** SUBMIT FORM SECTION **************/
 
 const button = document.getElementById("submit-button")
 const nameRegex = /^[a-z_ ]{3}/gi
@@ -302,7 +302,7 @@ button.addEventListener("click", function(e){
          
          else if(cvvConfirm){
          	cvvNumber.style.border = "none"
-         	cvvDiv.style.display = "none"
+         	cvvAlert.style.display = "none"
          }
 
          
