@@ -29,7 +29,7 @@ const bitcoin = document.getElementById("bitcoin")
 const paymentMessage = document.createElement("h4")
 const paymentMessageDiv = document.getElementById("payment-message")
 
-// hide the other box of Js is enabled
+// HIDE THE "OTHER" BOX IS JS IS ENABLED
 const htmlOtherBox = document.getElementById("other-specify-box")
 const htmlOtherLabel = document.getElementById("other-specify-label")
 htmlOtherLabel.style.display = "none"
@@ -43,7 +43,6 @@ extraJobInfoTag.innerHTML = "*- Please specify below"
 
 // NAME FIELD ACTIVE ON PAGE LOAD
 nameInput.focus()
-
 
 /************** JOB OPTION SECTION **************/
 
@@ -145,25 +144,22 @@ const price = parseInt(clickedType)
 		}
 
 for(let i = 0; i < checkboxes.length; i++){
-for(let j = 0; j < label.length; i++){
 let date = checkboxes[i].getAttribute("data-day-and-time")
 
         //IF AN EVENT CLASHES WITH ANOTHER EVENT - GREY OUT UNCHECKED EVENT
 		if(clicked.checked && date === eventTime){
 		if(checkboxes[i] !== clicked){
 			checkboxes[i].setAttribute('disabled', true)
-			label[i].style.color = "grey"
 			label[i].style.textDecoration = "line-through"
 		}}
 
         //IF CHECKBOX IS UNCHECKED - UNDO THE GREY OUT THEME
 	    if(!clicked.checked){
 			checkboxes[i].removeAttribute('disabled')
-			label[i].style.color = "inherit"
 			label[i].style.textDecoration = "none"
-
-		}
-	}}
+         
+		} 
+	}
 })
 
 
@@ -173,6 +169,7 @@ creditCardDiv.style.display = "block"
 paypal.style.display = "none"
 bitcoin.style.display = "none"
 paymentSelection.value = "credit card"
+
 
 paymentSelection.addEventListener("change", function(){
 
@@ -199,19 +196,20 @@ paymentSelection.addEventListener("change", function(){
 
          //DISPLAY WARNING MESSAGE IF NOTHING IS SELECTED
 		 else if(paymentSelection.value === "select method"){
+		 	paymentSelection.value = "credit card"
 			bitcoin.style.display = "none";
-			creditCardDiv.style.display = "none"
+			creditCardDiv.style.display = "block"
 	        paypal.style.display = "none"
-	        paymentMessageDiv.appendChild(paymentMessage)
-	        paymentMessage.style.display = "block"
+	       
 		}
 	})
 
 
 /*************** SUBMIT FORM SECTION **************/
 
+const form = document.querySelector("form")
 const button = document.getElementById("submit-button")
-const nameRegex = /^[a-z_ ]{3}/gi
+const nameRegex = /^[a-z_ ]/gi
 const emailRegex = /^\S+@\S+$/
 const creditCardRegex = /^[0-9]{16}$/
 const zipcodeRegex = /^[0-9]{5}$/
@@ -252,7 +250,7 @@ cvvAlert.style.color =       "red"
 
 
 // DO NOT ALLOW FORM SUBMITION IF ANY OF THE FOLLOWING ARE TRUE 
-button.addEventListener("click", function(e){
+form.addEventListener("submit", function(e){
     let name = nameRegex.exec(nameInput.value)
     let email = emailRegex.exec(emailInput.value)
     let creditCardConfirm = creditCardRegex.exec(creditCardInput.value)
@@ -264,9 +262,7 @@ button.addEventListener("click", function(e){
 	         e.preventDefault()
 	         nameAlertDiv.appendChild(alertName)
 	         alertName.innerHTML = `
-	         Your name must: have at <strong>least 3 characters
-	         </strong> and must<strong> NOT</strong> contain any 
-	         numbers or symbols!`;
+	         The name field must not be left blank! (John Doe)`;
              alertName.style.color = "red"
              nameInput.style.border = "3px solid red"
 	         nameInput.focus() }
@@ -313,14 +309,10 @@ button.addEventListener("click", function(e){
 	     	workshopAlert.style.color = "green"
 
 	     }
-	    
-	     // IF NO PAYMENT OPTION HAS BEEN SELECTED - DISPLAY WARNING MESSAGE
-	     if(paymentSelection.value === "select method"){
-	     	paymentMessage.style.color = "red"}	     
-	     else if(paymentSelection.vaue !== "select method"){
-	     	paymentMessage.style.display = "none"
-	     }
-        
+
+	     //RUN THE FOLLOWING CODE ONLY IF CREDIT CARD IS SELECTED 
+         if(paymentSelection.value === "credit card"){
+         	
          // IF CREDIT-CARD IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
          if(!creditCardConfirm){
          	e.preventDefault()
@@ -358,7 +350,7 @@ button.addEventListener("click", function(e){
          	cvvDiv.appendChild(cvvAlert)
          	cvvAlert.innerHTML = "Verified"
          	cvvAlert.style.color = "green"
-         }
+         }}
 
          
 	})
