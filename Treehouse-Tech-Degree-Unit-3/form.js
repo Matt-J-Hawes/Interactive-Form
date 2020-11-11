@@ -145,7 +145,6 @@ const price = parseInt(clickedType)
 
 for(let i = 0; i < checkboxes.length; i++){
 let date = checkboxes[i].getAttribute("data-day-and-time")
-
         //IF AN EVENT CLASHES WITH ANOTHER EVENT - GREY OUT UNCHECKED EVENT
 		if(clicked.checked && date === eventTime){
 		if(checkboxes[i] !== clicked){
@@ -209,9 +208,9 @@ paymentSelection.addEventListener("change", function(){
 
 const form = document.querySelector("form")
 const button = document.getElementById("submit-button")
-const nameRegex = /^[a-z_ ]/gi
-const emailRegex = /^\S+@\S+$/
-const creditCardRegex = /^[0-9]{16}$/
+const nameRegex = /[a-z A-Z]+/
+const emailRegex = /(.+)@(.+){2,}\.(.+){2,}/
+const creditCardRegex = /^[0-9]{13,16}$/
 const zipcodeRegex = /^[0-9]{5}$/
 const cvvRegex = /^[0-9]{3}$/
 const nameAlertDiv = document.getElementById("nameAlert")
@@ -230,24 +229,9 @@ const zipInput = document.getElementById("zip")
 const cvvNumber = document.getElementById("cvv")
 
 
-//ALERT (DEFAULT) MESSAGES
-alertName.innerHTML = ''
-emailAlert.innerHTML = ''
-workshopAlert.innerHTML = `You must select at least <strong>ONE</strong> activity!`
-creditAlert.innerHTML =   `Please enter a valid card number (16 digits required)`
-zipAlert.innerHTML =      `Please enter a valid Zip Code (5 digits requred)`
-cvvAlert.innerHTML =      `Please enter a valid CVV (3 digits required)`
-
 //ALERT STYLES
 emailAlert.style.marginTop = "-4px"
 alertName.style.marginTop =  "-4px"
-alertName.style.color =      "red"
-emailAlert.style.color =     "red"
-workshopAlert.style.color =  "red"
-creditAlert.style.color =    "red"
-zipAlert.style.color =       "red"
-cvvAlert.style.color =       "red"
-
 
 // DO NOT ALLOW FORM SUBMITION IF ANY OF THE FOLLOWING ARE TRUE 
 form.addEventListener("submit", function(e){
@@ -281,7 +265,7 @@ form.addEventListener("submit", function(e){
 		    emailAlert.innerHTML = `Please enter a <strong>VALID</strong> email address (mail@example.com)`
 		    emailAlert.style.color = "red"
 		    emailInput.style.border = "3px solid red"
-		    nameInput.focus() }
+		    emailInput.focus() }
 	    else if (email){
 	     	 emailAlertDiv.appendChild(emailAlert)
 	     	 emailAlert.innerHTML = "Verified"
@@ -302,7 +286,9 @@ form.addEventListener("submit", function(e){
          // IF AT LEAST ONE ACTIVITY HAS NOT BEEN SELECTED - DISPLAY WARNING MESSAGE
 	     if(totalCost === 0){
 	     	e.preventDefault()
-	     	workshops.appendChild(workshopAlert) }	     	
+	     	workshops.appendChild(workshopAlert)
+	     	workshopAlert.innerHTML = `You must select at least <strong>ONE</strong> activity!` 
+	        workshopAlert.style.color = "red"}	     	
 	     else if(totalCost !== 0){
 	     	workshops.appendChild(workshopAlert)
 	     	workshopAlert.innerHTML = "Thank you for selecting an acitivity!"
@@ -317,25 +303,29 @@ form.addEventListener("submit", function(e){
          if(!creditCardConfirm){
          	e.preventDefault()
          	creditCardInput.style.border = "3px solid red"
-            creditCardPayment.appendChild(creditAlert)}
+            creditCardPayment.appendChild(creditAlert)
+            creditAlert.innerHTML = `Please enter a valid card number (16 digits required)`
+            creditAlert.style.color = "red"}
          else if(creditCardConfirm){
          	creditCardPayment.appendChild(creditAlert)
          	creditCardInput.style.border = "3px solid green"
          	creditAlert.innerHTML = "Verified"
-         	creditAlert.style.color = "Green"
+         	creditAlert.style.color = "green"
          }
 
          // IF ZIPCODE IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
          if(!zip){
          	e.preventDefault()
          	zipInput.style.border = "3px solid red"
-         	zipCodeAddress.appendChild(zipAlert)}
+         	zipCodeAddress.appendChild(zipAlert)
+            zipAlert.innerHTML = `Please enter a valid Zip Code (5 digits requred)`
+            zipAlert.style.color = "red"}
 
          else if(zip){
          	zipCodeAddress.appendChild(zipAlert)
          	zipInput.style.border = "3px solid green"
          	zipAlert.innerHTML = "Verified"
-         	zipAlert.style.color = "Green"
+         	zipAlert.style.color = "green"
          }
 
          // IF CVV IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
@@ -343,6 +333,8 @@ form.addEventListener("submit", function(e){
          	e.preventDefault()
          	cvvNumber.style.border = "3px solid red"
          	cvvDiv.appendChild(cvvAlert)
+         	cvvAlert.innerHTML = `Please enter a valid CVV (3 digits required)`
+         	cvvAlert.style.color = "red"
          }
          
          else if(cvvConfirm){
