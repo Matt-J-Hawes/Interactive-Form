@@ -7,13 +7,13 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div class="container">
+	
     
     <header>
       <span>Register for</span>
-      <h1>Full Stack Conf</h1>
+      <h1>Full Stack Conference</h1>
     </header>
-
+<div class="container">
     <form action="index.html" method="post" novalidate>
       <section>
       <fieldset>         
@@ -79,30 +79,32 @@
       <fieldset class="activities">
         <legend>Register for Activities</legend>
           <label>
-            <input type="checkbox" name="all" data-cost="200"> Main Conference — $200
-          </label>
+            <div class="mainConf">
+            <input type="checkbox" name="all" data-cost="200" autocomplete="off"> Main Conference — $200
+          </label></div>
+          <div class="sectionOne">
           <label>
-            <input type="checkbox" name="js-frameworks" data-day-and-time="Tuesday 9am-12pm" data-cost="100"> 
+            <input type="checkbox" name="js-frameworks" data-day-and-time="Tuesday 9am-12pm" data-cost="100" autocomplete="off"> 
             JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100
           </label>
           <label>
-            <input type="checkbox" name="js-libs" data-day-and-time="Tuesday 1pm-4pm" data-cost="100"> 
+            <input type="checkbox" name="js-libs" data-day-and-time="Tuesday 1pm-4pm" data-cost="100" autocomplete="off"> 
             JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100
           </label>
           <label>
-            <input type="checkbox" name="express" data-day-and-time="Tuesday 9am-12pm" data-cost="100"> 
+            <input type="checkbox" name="express" data-day-and-time="Tuesday 9am-12pm" data-cost="100" autocomplete="off"> 
             Express Workshop — Tuesday 9am-12pm, $100
           </label>
           <label>
-            <input type="checkbox" name="node" data-day-and-time="Tuesday 1pm-4pm" data-cost="100"> 
+            <input type="checkbox" name="node" data-day-and-time="Tuesday 1pm-4pm" data-cost="100" autocomplete="off"> 
             Node.js Workshop — Tuesday 1pm-4pm, $100
           </label>          
           <label>
-            <input type="checkbox" name="build-tools" data-day-and-time="Wednesday 9am-12pm" data-cost="100"> 
+            <input type="checkbox" name="build-tools" data-day-and-time="Wednesday 9am-12pm" data-cost="100" autocomplete="off"> 
             Build tools Workshop — Wednesday 9am-12pm, $100
           </label>
           <label>
-            <input type="checkbox" name="npm" data-day-and-time="Wednesday 1pm-4pm" data-cost="100"> 
+            <input type="checkbox" name="npm" data-day-and-time="Wednesday 1pm-4pm" data-cost="100" autocomplete="off"> 
             npm Workshop — Wednesday 1pm-4pm, $100
           </label>
                   	
@@ -175,6 +177,11 @@
     </form>
 
   </div>
+  <footer>
+    <img src="images/ruby.png"><img src="images/scala.png"><img src="images/python.png"><img src="images/javascript.png">
+    <img src="images/java.png"><img src="images/html.png"><img src="images/css-1.png">
+    <img src="images/c.png">
+  </footer>
   <script type="text/JavaScript" src="form.js"></script>
 </body>
 </html>

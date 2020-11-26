@@ -8,8 +8,6 @@
 *                                                                                 *
 /**********************************************************************************/
 
-
-
 /******************* VARIABLES **********************/
 
 const nameInput = document.getElementById("name")
@@ -34,18 +32,18 @@ const htmlOtherBox = document.getElementById("other-specify-box")
 const htmlOtherLabel = document.getElementById("other-specify-label")
 htmlOtherLabel.style.display = "none"
 htmlOtherBox.style.display = "none"
-
+selectDesign.value = 'select-theme'
 
 paymentMessage.innerHTML = "*- You must select a payment method in order to proceed"
 pleaseSelectTheme.innerHTML = "Please select a T-shirt Theme"
 extraJobInfoTag.innerHTML = "*- Please specify below"
+pleaseSelectTheme.style.color = 'white'
 
 
 // NAME FIELD ACTIVE ON PAGE LOAD
 nameInput.focus()
 
 /************** JOB OPTION SECTION **************/
-
 
 jobOptions.addEventListener("change", function(e){
 
@@ -62,19 +60,15 @@ for(let x = 0; x < jobOptions.length; x++)
 			extraJobInfoTag.style.display = "block"
 			section.appendChild(jobInfo)
 			jobInfo.style.display = "block"
-
-		}
-
-	})
-
+		};
+	});
 
 /*************** T-SHIRT SECTION ******************/
 
 selectColor.style.display = "none"
 pleaseSelectTheme.style.fontStyle = "italic"
-pleaseSelectTheme.style.marginTop = "2px"
+pleaseSelectTheme.style.marginTop = "9px"
 shirtDiv.appendChild(pleaseSelectTheme)
-
 
 selectDesign.addEventListener("change", function(e){
 for(let x = 0; x < selectColor.length; x++){
@@ -82,7 +76,8 @@ for(let x = 0; x < selectColor.length; x++){
 	//IF JS PUNS IS SELECTED - HIDE ALL JS HEART OPTIONS
 	if(e.target.value === "js puns"){
 			pleaseSelectTheme.style.display = "none";
-			selectColor.style.display = "block";
+			selectColor.style.display = "inherit";
+			selectColor.style.marginTop = '9.5px'
 			selectColor.value = selectColor[0].value;
 			selectColor[3].style.display = "none"
 			selectColor[4].style.display = "none"
@@ -94,7 +89,8 @@ for(let x = 0; x < selectColor.length; x++){
     //IF JS HEARTS IS SELECTED - HIDE ALL JS PUNS OPTIONS
 	else if (e.target.value === "heart js"){
 			pleaseSelectTheme.style.display = "none";
-            selectColor.style.display = "block";
+            selectColor.style.display = "inherit";
+            selectColor.style.marginTop = '9.5px'
             selectColor.value = selectColor[3].value;
 			selectColor[0].style.display = "none"
 			selectColor[1].style.display = "none"
@@ -110,9 +106,8 @@ for(let x = 0; x < selectColor.length; x++){
 			pleaseSelectTheme.style.fontStyle = "italic"
 			pleaseSelectTheme.style.marginTop = "2px"
 			shirtDiv.appendChild(pleaseSelectTheme)
-		}}
-	})
-
+		}};
+	});
 
 /*************** ACTIVITY SECTION ******************/
 
@@ -121,8 +116,8 @@ const totalCostText = document.createElement("h3")
 const checkboxes = workshops.getElementsByTagName("input")
 const label = workshops.getElementsByTagName("label")
 let   totalCost = 0;
-
 totalCostText.innerHTML = `Total Cost: $${totalCost}`
+totalCostText.style.color = 'white'
 workshops.appendChild(totalCostText)
 
 //FUNCTION TO ADD PRICE OF SELECTED AND GREY OUT UNAVAILABLE OPTIONS
@@ -135,13 +130,13 @@ const price = parseInt(clickedType)
         //IF A CHECKBOX IS CLICKED - ADD PRICE
 		if(clicked.checked){
 			totalCost += price
-			totalCostText.innerHTML = `Total Cost: $${totalCost}`}
+			totalCostText.innerHTML = `Total Cost: $${totalCost}`};
 
         //IF A CHECKBOX IS UNCLICKED - MINUS PRICE
 		if(!clicked.checked){
 			totalCost -= price
 			totalCostText.innerHTML = `Total Cost: $${totalCost}`
-		}
+		};
 
 for(let i = 0; i < checkboxes.length; i++){
 let date = checkboxes[i].getAttribute("data-day-and-time")
@@ -149,18 +144,17 @@ let date = checkboxes[i].getAttribute("data-day-and-time")
 		if(clicked.checked && date === eventTime){
 		if(checkboxes[i] !== clicked){
 			checkboxes[i].setAttribute('disabled', true)
-			label[i].style.textDecoration = "line-through"
-		}}
+			label[i].style.textDecoration = "line-through"			
+		}};
 
         //IF CHECKBOX IS UNCHECKED - UNDO THE GREY OUT THEME
-	    if(!clicked.checked){
+	    if(!clicked.checked && date === eventTime){
 			checkboxes[i].removeAttribute('disabled')
-			label[i].style.textDecoration = "none"
-         
-		} 
-	}
-})
-
+			label[i].style.textDecoration = "none"  
+			checkboxes[i].style.cursor = 'inherit'     
+		}; 
+	};
+});
 
 /*************** PAYMENT SECTION ******************/
 
@@ -168,7 +162,6 @@ creditCardDiv.style.display = "block"
 paypal.style.display = "none"
 bitcoin.style.display = "none"
 paymentSelection.value = "credit card"
-
 
 paymentSelection.addEventListener("change", function(){
 
@@ -200,9 +193,8 @@ paymentSelection.addEventListener("change", function(){
 			creditCardDiv.style.display = "block"
 	        paypal.style.display = "none"
 	       
-		}
-	})
-
+		};
+	});
 
 /*************** SUBMIT FORM SECTION **************/
 
@@ -228,7 +220,6 @@ const creditCardInput = document.getElementById("cc-num")
 const zipInput = document.getElementById("zip")
 const cvvNumber = document.getElementById("cvv")
 
-
 //ALERT STYLES
 emailAlert.style.marginTop = "-4px"
 alertName.style.marginTop =  "-4px"
@@ -247,54 +238,54 @@ form.addEventListener("submit", function(e){
 	         nameAlertDiv.appendChild(alertName)
 	         alertName.innerHTML = `
 	         The name field must not be left blank! (John Doe)`;
-             alertName.style.color = "red"
-             nameInput.style.border = "3px solid red"
+             alertName.style.color = "#FF6347"
+             nameInput.style.border = "3px solid #FF6347"
 	         nameInput.focus() }
 		 else if (name){
 		 	 nameAlertDiv.appendChild(alertName)
 		 	 alertName.innerHTML = "Verified"
-		 	 alertName.style.color = "green"
-		 	 nameInput.style.border = "3px solid green"
+		 	 alertName.style.color = "#5CDB95"
+		 	 nameInput.style.border = "3px solid #5CDB95"
 		 	 
-		 }
+		 };
 		
 		// IF EMAIL IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
 		if(!email){
 			e.preventDefault()
 		    emailAlertDiv.appendChild(emailAlert)
 		    emailAlert.innerHTML = `Please enter a <strong>VALID</strong> email address (mail@example.com)`
-		    emailAlert.style.color = "red"
-		    emailInput.style.border = "3px solid red"
+		    emailAlert.style.color = "#FF6347"
+		    emailInput.style.border = "3px solid #FF6347"
 		    emailInput.focus() }
 	    else if (email){
 	     	 emailAlertDiv.appendChild(emailAlert)
 	     	 emailAlert.innerHTML = "Verified"
-	     	 emailAlert.style.color = "green"
-	     	 emailInput.style.border = "3px solid green"
+	     	 emailAlert.style.color = "#5CDB95"
+	     	 emailInput.style.border = "3px solid #5CDB95"
 	     	 
-	     }
+	     };
 
          // IF JOB-OPTIONS "OTHER" SECTION IS NOT FILLED IN - DISPLAY WARNING MESSAGE
 	     if(jobOptions.value === "other" && jobInfo.value === ''){
 	     	e.preventDefault()
 	     	extraJobInfoTag.innerHTML = "You must specify below"
-	     	extraJobInfoTag.style.color = "red"
+	     	extraJobInfoTag.style.color = "#FF6347"
 	     	extraJobInfoTag.focus()
 
-	     }
+	     };
 
          // IF AT LEAST ONE ACTIVITY HAS NOT BEEN SELECTED - DISPLAY WARNING MESSAGE
 	     if(totalCost === 0){
 	     	e.preventDefault()
 	     	workshops.appendChild(workshopAlert)
 	     	workshopAlert.innerHTML = `You must select at least <strong>ONE</strong> activity!` 
-	        workshopAlert.style.color = "red"}	     	
+	        workshopAlert.style.color = "#FF6347"}	     	
 	     else if(totalCost !== 0){
 	     	workshops.appendChild(workshopAlert)
 	     	workshopAlert.innerHTML = "Thank you for selecting an acitivity!"
-	     	workshopAlert.style.color = "green"
+	     	workshopAlert.style.color = "#5CDB95"
 
-	     }
+	     };
 
 	     //RUN THE FOLLOWING CODE ONLY IF CREDIT CARD IS SELECTED 
          if(paymentSelection.value === "credit card"){
@@ -302,52 +293,46 @@ form.addEventListener("submit", function(e){
          // IF CREDIT-CARD IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
          if(!creditCardConfirm){
          	e.preventDefault()
-         	creditCardInput.style.border = "3px solid red"
+         	creditCardInput.style.border = "3px solid #FF6347"
             creditCardPayment.appendChild(creditAlert)
             creditAlert.innerHTML = `Please enter a valid card number (16 digits required)`
-            creditAlert.style.color = "red"}
+            creditAlert.style.color = "#FF6347"}
          else if(creditCardConfirm){
          	creditCardPayment.appendChild(creditAlert)
-         	creditCardInput.style.border = "3px solid green"
+         	creditCardInput.style.border = "3px solid #5CDB95"
          	creditAlert.innerHTML = "Verified"
-         	creditAlert.style.color = "green"
-         }
+         	creditAlert.style.color = "#5CDB95"
+         };
 
          // IF ZIPCODE IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
          if(!zip){
          	e.preventDefault()
-         	zipInput.style.border = "3px solid red"
+         	zipInput.style.border = "3px solid #FF6347"
          	zipCodeAddress.appendChild(zipAlert)
             zipAlert.innerHTML = `Please enter a valid Zip Code (5 digits requred)`
-            zipAlert.style.color = "red"}
+            zipAlert.style.color = "#FF6347"}
 
          else if(zip){
          	zipCodeAddress.appendChild(zipAlert)
-         	zipInput.style.border = "3px solid green"
+         	zipInput.style.border = "3px solid #5CDB95"
          	zipAlert.innerHTML = "Verified"
-         	zipAlert.style.color = "green"
-         }
+         	zipAlert.style.color = "#5CDB95"
+         };
 
          // IF CVV IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
          if(!cvvConfirm){
          	e.preventDefault()
-         	cvvNumber.style.border = "3px solid red"
+         	cvvNumber.style.border = "3px solid #FF6347"
          	cvvDiv.appendChild(cvvAlert)
          	cvvAlert.innerHTML = `Please enter a valid CVV (3 digits required)`
-         	cvvAlert.style.color = "red"
+         	cvvAlert.style.color = "#FF6347"
          }
          
          else if(cvvConfirm){
-         	cvvNumber.style.border = "3px solid green"
+         	cvvNumber.style.border = "3px solid #5CDB95"
          	cvvDiv.appendChild(cvvAlert)
          	cvvAlert.innerHTML = "Verified"
-         	cvvAlert.style.color = "green"
-         }}
-
-         
-	})
-
-
-
-
+         	cvvAlert.style.color = "#5CDB95"
+         }};      
+	});
 
