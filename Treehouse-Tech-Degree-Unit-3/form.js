@@ -10,6 +10,7 @@
 
 /******************* VARIABLES **********************/
 
+const body = document.querySelector('body')
 const nameInput = document.getElementById("name")
 const emailInput = document.getElementById("mail")
 const jobInfo = document.createElement("input")
@@ -202,7 +203,7 @@ const form = document.querySelector("form")
 const button = document.getElementById("submit-button")
 const nameRegex = /[a-z A-Z]+/
 const emailRegex = /(.+)@(.+){2,}\.(.+){2,}/
-const creditCardRegex = /^[0-9]{13,16}$/
+const creditCardRegex = /^[0-9]{4}\s?[0-9]{4}\s?[0-9]{4}\s?[0-9]{4}$/
 const zipcodeRegex = /^[0-9]{5}$/
 const cvvRegex = /^[0-9]{3}$/
 const nameAlertDiv = document.getElementById("nameAlert")
@@ -224,16 +225,98 @@ const cvvNumber = document.getElementById("cvv")
 emailAlert.style.marginTop = "-4px"
 alertName.style.marginTop =  "-4px"
 
+//REAL TIME ERROR MESSAGES
+body.addEventListener('keyup', function(e){
+	//NAME INPUT VALIDATION ON USER INPUT
+	if(e.target === nameInput){
+		if(nameInput.value === ''){
+			 nameAlertDiv.appendChild(alertName)
+	         alertName.innerHTML = `
+	         The name field must not be left blank! (John Doe)`;
+             alertName.style.color = "#FF6347"
+             nameInput.style.border = "3px solid #FF6347"
+             
+
+		} else {
+			 nameAlertDiv.appendChild(alertName)
+		     alertName.innerHTML = "&#x2713"
+	    	 alertName.style.color = "#5CDB95"
+		 	 nameInput.style.border = "3px solid #5CDB95"
+		 	};
+        };
+     //EMAIL INPUT VALIDATION ON USER INPUT
+	 if(e.target === emailInput){
+	 	if(!emailRegex.exec(emailInput.value)){
+			 emailAlertDiv.appendChild(emailAlert)
+			 emailAlert.innerHTML = `Please enter a <strong>VALID</strong> email address (mail@example.com)`
+	    	 emailAlert.style.color = "#FF6347"
+		     emailInput.style.border = "3px solid #FF6347"
+			 emailInput.focus() }
+	    else {
+	     	 emailAlertDiv.appendChild(emailAlert)
+	     	 emailAlert.innerHTML = "&#x2713"
+	     	 emailAlert.style.color = "#5CDB95"
+	     	 emailInput.style.border = "3px solid #5CDB95"	     	 
+	     };
+	 };
+     //CREDIT CARD INPUT VALIDATION ON USER INPUT
+	 if(e.target === creditCardInput){
+	 	if(!creditCardRegex.exec(creditCardInput.value)){
+	 		creditCardInput.style.border = "3px solid #FF6347"
+            creditCardPayment.appendChild(creditAlert)
+            creditAlert.innerHTML = `Please enter a valid card number (16 digits required)`
+            creditAlert.style.color = "#FF6347"
+        }
+         else {
+         	creditCardPayment.appendChild(creditAlert)
+         	creditCardInput.style.border = "3px solid #5CDB95"
+         	creditAlert.innerHTML = "&#x2713"
+         	creditAlert.style.color = "#5CDB95";
+         	const chunk = creditCardInput.value.split('').join('')
+         	const groupOne = chunk.slice(0,4)
+         	const groupTwo = chunk.slice(4,8)
+         	const groupThree = chunk.slice(8,12)
+         	const groupFour = chunk.slice(12,16)
+         	 if(!creditCardInput.value.includes(' ')){
+         	creditCardInput.value = `${groupOne} ${groupTwo} ${groupThree} ${groupFour}`
+             }         	
+
+         };
+	 }
+     //ZIP-CODE INPUT VALIDATION ON USER INPUT
+	 if(e.target === zipInput){
+	 	if(!zipcodeRegex.exec(zipInput.value)){
+	 		zipInput.style.border = "3px solid #FF6347"
+         	zipCodeAddress.appendChild(zipAlert)
+            zipAlert.innerHTML = `Please enter a valid Zip Code (5 digits requred)`
+            zipAlert.style.color = "#FF6347"
+	 	} else {
+	 		zipCodeAddress.appendChild(zipAlert)
+         	zipInput.style.border = "3px solid #5CDB95"
+         	zipAlert.innerHTML = "&#x2713"
+         	zipAlert.style.color = "#5CDB95"
+	 	};
+	 };	
+
+	 if(e.target === cvvNumber){
+	 	if(!cvvRegex.exec(cvvNumber.value)){
+	 		cvvNumber.style.border = "3px solid #FF6347"
+         	cvvDiv.appendChild(cvvAlert)
+         	cvvAlert.innerHTML = `Please enter a valid CVV (3 digits required)`
+         	cvvAlert.style.color = "#FF6347"
+	 	} else {
+	 		cvvNumber.style.border = "3px solid #5CDB95"
+         	cvvDiv.appendChild(cvvAlert)
+         	cvvAlert.innerHTML = "&#x2713"
+         	cvvAlert.style.color = "#5CDB95"
+	 	}
+	 } 
+});
+
 // DO NOT ALLOW FORM SUBMITION IF ANY OF THE FOLLOWING ARE TRUE 
-form.addEventListener("submit", function(e){
-    let name = nameRegex.exec(nameInput.value)
-    let email = emailRegex.exec(emailInput.value)
-    let creditCardConfirm = creditCardRegex.exec(creditCardInput.value)
-    let zip = zipcodeRegex.exec(zipInput.value)
-    let cvvConfirm = cvvRegex.exec(cvvNumber.value)
-     
+form.addEventListener("submit", function(e){    
          // IF NAME IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
-		 if(!name){
+		 if(!nameRegex.exec(nameInput.value)){
 	         e.preventDefault()
 	         nameAlertDiv.appendChild(alertName)
 	         alertName.innerHTML = `
@@ -241,25 +324,25 @@ form.addEventListener("submit", function(e){
              alertName.style.color = "#FF6347"
              nameInput.style.border = "3px solid #FF6347"
 	         nameInput.focus() }
-		 else if (name){
+		 else {
 		 	 nameAlertDiv.appendChild(alertName)
-		 	 alertName.innerHTML = "Verified"
+		 	 alertName.innerHTML = "&#x2713"
 		 	 alertName.style.color = "#5CDB95"
 		 	 nameInput.style.border = "3px solid #5CDB95"
 		 	 
 		 };
 		
 		// IF EMAIL IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
-		if(!email){
+		if(!emailRegex.exec(emailInput.value)){
 			e.preventDefault()
 		    emailAlertDiv.appendChild(emailAlert)
 		    emailAlert.innerHTML = `Please enter a <strong>VALID</strong> email address (mail@example.com)`
 		    emailAlert.style.color = "#FF6347"
 		    emailInput.style.border = "3px solid #FF6347"
 		    emailInput.focus() }
-	    else if (email){
+	    else {
 	     	 emailAlertDiv.appendChild(emailAlert)
-	     	 emailAlert.innerHTML = "Verified"
+	     	 emailAlert.innerHTML = "&#x2713"
 	     	 emailAlert.style.color = "#5CDB95"
 	     	 emailInput.style.border = "3px solid #5CDB95"
 	     	 
@@ -282,7 +365,7 @@ form.addEventListener("submit", function(e){
 	        workshopAlert.style.color = "#FF6347"}	     	
 	     else if(totalCost !== 0){
 	     	workshops.appendChild(workshopAlert)
-	     	workshopAlert.innerHTML = "Thank you for selecting an acitivity!"
+	     	workshopAlert.innerHTML = "&#x2713"
 	     	workshopAlert.style.color = "#5CDB95"
 
 	     };
@@ -291,36 +374,36 @@ form.addEventListener("submit", function(e){
          if(paymentSelection.value === "credit card"){
          	
          // IF CREDIT-CARD IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
-         if(!creditCardConfirm){
+         if(!creditCardRegex.exec(creditCardInput.value)){
          	e.preventDefault()
          	creditCardInput.style.border = "3px solid #FF6347"
             creditCardPayment.appendChild(creditAlert)
             creditAlert.innerHTML = `Please enter a valid card number (16 digits required)`
             creditAlert.style.color = "#FF6347"}
-         else if(creditCardConfirm){
+         else {
          	creditCardPayment.appendChild(creditAlert)
          	creditCardInput.style.border = "3px solid #5CDB95"
-         	creditAlert.innerHTML = "Verified"
+         	creditAlert.innerHTML = "&#x2713"
          	creditAlert.style.color = "#5CDB95"
          };
 
          // IF ZIPCODE IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
-         if(!zip){
+         if(!zipcodeRegex.exec(zipInput.value)){
          	e.preventDefault()
          	zipInput.style.border = "3px solid #FF6347"
          	zipCodeAddress.appendChild(zipAlert)
             zipAlert.innerHTML = `Please enter a valid Zip Code (5 digits requred)`
             zipAlert.style.color = "#FF6347"}
 
-         else if(zip){
+         else{
          	zipCodeAddress.appendChild(zipAlert)
          	zipInput.style.border = "3px solid #5CDB95"
-         	zipAlert.innerHTML = "Verified"
+         	zipAlert.innerHTML = "&#x2713"
          	zipAlert.style.color = "#5CDB95"
          };
 
          // IF CVV IS INCORRECTLY FILLED OUT - DISPLAY WARNING MESSAGE
-         if(!cvvConfirm){
+         if(!cvvRegex.exec(cvvNumber.value)){
          	e.preventDefault()
          	cvvNumber.style.border = "3px solid #FF6347"
          	cvvDiv.appendChild(cvvAlert)
@@ -331,7 +414,7 @@ form.addEventListener("submit", function(e){
          else if(cvvConfirm){
          	cvvNumber.style.border = "3px solid #5CDB95"
          	cvvDiv.appendChild(cvvAlert)
-         	cvvAlert.innerHTML = "Verified"
+         	cvvAlert.innerHTML = "&#x2713"
          	cvvAlert.style.color = "#5CDB95"
          }};      
 	});
